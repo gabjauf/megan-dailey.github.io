@@ -2,7 +2,7 @@
 layout: about
 title: about
 permalink: /
-subtitle: Postdoctoral Researcher, <a href='#'>University of Lausanne Institute de Psychology</a>. 
+subtitle: Postdoctoral Researcher, University of Lausanne Institute of Psychology 
 
 profile:
   align: right
