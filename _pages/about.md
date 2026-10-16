@@ -23,7 +23,7 @@ latest_posts:
   scrollable: true # adds a vertical scroll bar if there are more than 3 new posts items
   limit: 3 # leave blank to include all the blog posts
 ---
- I am a postdoctoral researcher in phonetics and psycholinguistics at the University of Lausanne in Switzerland. I joined Dr. Audrey Bürki Foschini’s team in February 2025 on the L2 Spell grant. We are currently investigating how orthography influences the development of second language (L2) speech sound representations and productions.
+I am a postdoctoral researcher in phonetics and psycholinguistics at the University of Lausanne in Switzerland. I joined Dr. Audrey Bürki Foschini’s team in February 2025 on the L2 Spell grant. We are currently investigating how orthography influences the development of second language (L2) speech sound representations and productions.
 
 I earned my Ph.D. in Cognitive Science from the ENS – Université PSL in Paris, where I investigated adult bilingual processing of phonetic detail in English and mono- and bilingual sociophonetic perception of Hexagonal French at the Laboratoire de Sciences Cognitives et Psycholinguistique. My interest in language and cognition was first nourished at The Ohio State University, before I continued as a Master’s student in the Cognitive Science Master’s program at ENS – PSL.
 
