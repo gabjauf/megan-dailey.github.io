@@ -29,6 +29,8 @@ back_to_top: true # set to false to disable the back to top button
 # Theme
 # -----------------------------------------------------------------------------
 
+theme: minimal
+
 # repo color theme
 repo_theme_light: default # https://github.com/stats-organization/github-stats-extended/blob/master/packages/core/src/themes/README.md
 repo_theme_dark: dark # https://github.com/stats-organization/github-stats-extended/blob/master/packages/core/src/themes/README.md
