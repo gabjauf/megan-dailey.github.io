@@ -2,7 +2,7 @@
 layout: about
 title: about
 permalink: /
-subtitle: Postdoctoral Researcher, University of Lausanne - Institute of Psychology 
+subtitle: University of Lausanne - Institute of Psychology 
 
 profile:
   align: right
@@ -10,7 +10,7 @@ profile:
   image_circular: true # crops the image to make it circular
   more_info: >
 
-selected_papers: false # includes a list of papers marked as "selected={true}"
+selected_papers: true # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
 
 announcements:
@@ -27,8 +27,9 @@ latest_posts:
 
 I earned my Ph.D. in Cognitive Science from the ENS – Université PSL in Paris, where I investigated adult bilingual processing of phonetic detail in English and mono- and bilingual sociophonetic perception of Hexagonal French at the Laboratoire de Sciences Cognitives et Psycholinguistique. My interest in language and cognition was first nourished at The Ohio State University, before I continued as a Master’s student in the Cognitive Science Master’s program at ENS – PSL.
 
-I am in awe of our extraordinary propensity for language learning through all stages of life. In my research, I seek to uncover all that we know about the speech sounds of our second+ language – how we perceive and produce them, what individual and cognitive factors lead to their acquisition, to what extent we associate L2 speech sounds with new social meanings, and how all of this knowledge affects language processing in real time.
+I am in awe of our extraordinary propensity for language learning through all stages of life. In my research, I seek to uncover all that we know about the speech sounds of our second+ language: how we perceive and produce them, what individual and cognitive factors lead to their acquisition, to what extent we associate L2 speech sounds with new social meanings, and how all of this knowledge affects language processing in real time.
 
+This website is under construction. Check back soon for more details!
 
 
 
