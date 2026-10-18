@@ -1,8 +1,10 @@
 ---
 import "../styles/global.css";
-import { site } from "../data/site";
-import { publications } from "../data/publications";
-import { Content as About } from "../data/about.md";
+import { getCollection } from "astro:content";
+import { site } from "../content/site";
+import { Content as About } from "../content/about.md";
+
+const publications = (await getCollection("publications")).map((p) => p.data);
 
 const years = [...new Set(publications.map((p) => p.year))].sort((a, b) => b - a);
 const isMe = (author: string) => author.startsWith("Megan");
@@ -69,10 +71,12 @@ const updated = new Date().toLocaleDateString("en-GB", { month: "long", year: "n
                             {isMe(a) ? <b>{a}</b> : a}
                           </>
                         ))}
-                        {p.venue && (
+                        {(p.journal || p.details) && (
                           <>
                             <br />
-                            <Fragment set:html={p.venue} />
+                            {p.journal && <i>{p.journal}</i>}
+                            {p.journal && p.details && ", "}
+                            {p.details}
                           </>
                         )}
                       </p>

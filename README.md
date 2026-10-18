@@ -53,57 +53,63 @@ git commit -m "Add new publication"
 git push
 ```
 
-`npm run build` produces the final site exactly as the online build does. If it finishes with `Complete!`, the deploy will work. If it fails, it prints the file and line number of the problem (see [Troubleshooting](#troubleshooting)). Pushing a broken change won't take the site down, the previous version simply stays online, but it's quicker to catch it locally.
+`npm run build` produces the final site exactly as the online build does. If it finishes with `Complete!`, the deploy will work. If it fails, it names the file and the problem (see [Troubleshooting](#troubleshooting)). Pushing a broken change won't take the site down, the previous version simply stays online, but it's quicker to catch it locally.
 
 After pushing, you can follow the deploy in the **Actions** tab of the repository on GitHub.
 
 ## Which file to edit
 
-| I want to change…                              | Edit this file                                         |
-| ---------------------------------------------- | ------------------------------------------------------ |
-| The "About" text                               | [`src/data/about.md`](src/data/about.md)               |
-| The list of publications                       | [`src/data/publications.ts`](src/data/publications.ts) |
-| My name, job title, university, links, contact | [`src/data/site.ts`](src/data/site.ts)                 |
-| My photo                                       | [`public/prof_pic.jpg`](public/prof_pic.jpg)           |
-| A PDF (CV, paper)                              | put it in [`public/`](public)                          |
+| I want to change…                              | Edit this file                                          |
+| ---------------------------------------------- | ------------------------------------------------------- |
+| The "About" text                               | [`src/content/about.md`](src/content/about.md)          |
+| Publications (one file per paper)              | [`src/content/publications/`](src/content/publications) |
+| My name, job title, university, links, contact | [`src/content/site.ts`](src/content/site.ts)            |
+| My photo                                       | [`public/prof_pic.jpg`](public/prof_pic.jpg)            |
+| A PDF (CV, paper)                              | put it in [`public/`](public)                           |
 
 Everything else is the page layout and build configuration; you shouldn't need to touch it.
 
 ### About text
 
-[`src/data/about.md`](src/data/about.md) is Markdown: blank line between paragraphs, `**bold**`, `*italic*`, `[link text](https://example.com)`.
+[`src/content/about.md`](src/content/about.md) is Markdown: blank line between paragraphs, `**bold**`, `*italic*`, `[link text](https://example.com)`.
 
 ### Publications
 
-[`src/data/publications.ts`](src/data/publications.ts) is a list of entries. The `.ts` extension means TypeScript (JavaScript with type checks), but you only edit the data inside it, which reads like a simple list. Copy an existing entry and change it. Order doesn't matter: entries are grouped by year, newest first.
+Each paper is its own Markdown file in [`src/content/publications/`](src/content/publications). To add one, create a new `.md` file there (or copy an existing one). The file name is up to you, it never appears on the site; something like `2025-short-title.md` keeps the folder tidy. To remove a paper, delete its file.
 
-```ts
-  {
-    title: "Title of the paper",
-    authors: ["Megan M. Dailey", "Second Author", "Third Author"],
-    year: 2025,
-    type: "Article",
-    venue: "<i>Journal Name</i>, 12(3), 45–67",
-    doi: "10.1177/02676583231234567",
-    pdf: "/my-paper.pdf",
-  },
+The file only contains a header between two `---` lines, in [YAML](https://learnxinyminutes.com/docs/yaml/) (`field: value`, one per line):
+
+```md
+---
+title: Title of the paper
+authors: [Megan M. Dailey, Second Author, Third Author]
+year: 2025
+type: Article
+journal: Journal Name
+details: 12(3), 45–67
+doi: 10.1177/02676583231234567
+pdf: /my-paper.pdf
+---
 ```
 
-| Field     | Required? | Notes                                                                               |
-| --------- | --------- | ----------------------------------------------------------------------------------- |
-| `title`   | yes       |                                                                                     |
-| `authors` | yes       | List of strings. Names starting with "Megan" are shown in bold.                     |
-| `year`    | yes       | A number, **no quotes**.                                                            |
-| `type`    | yes       | One of `"Article"`, `"Ph.D. thesis"`, `"Conference"`, `"Chapter"`.                  |
-| `venue`   | no        | Free text; HTML such as `<i>…</i>` is allowed.                                      |
-| `doi`     | no        | Just the DOI (`10.…`), not the full URL. Adds a "DOI" link.                         |
-| `pdf`     | no        | Path to a file in `public/` (e.g. `"/my-paper.pdf"`) or any URL. Adds a "PDF" link. |
+| Field     | Required? | Notes                                                                             |
+| --------- | --------- | --------------------------------------------------------------------------------- |
+| `title`   | yes       | If it contains a colon `:`, wrap the whole title in double quotes.                |
+| `authors` | yes       | Comma-separated, inside `[ ]`. Names starting with "Megan" are shown in bold.     |
+| `year`    | yes       | Papers are grouped by year, newest first.                                         |
+| `type`    | yes       | One of `Article`, `Ph.D. thesis`, `Conference`, `Chapter`.                        |
+| `journal` | no        | Shown in italics.                                                                 |
+| `details` | no        | Volume, issue, pages, or the university for a thesis. Shown after the journal.    |
+| `doi`     | no        | Just the DOI (`10.…`), not the full URL. Adds a "DOI" link.                       |
+| `pdf`     | no        | Path to a file in `public/` (e.g. `/my-paper.pdf`) or any URL. Adds a "PDF" link. |
 
-Delete optional lines you don't need. The syntax rules: strings in double quotes, a comma after every line, and each entry ends with `},`.
+Delete optional lines you don't need. If a field is missing or misspelled, `npm run dev` and `npm run build` say which file and which field.
+
+To add a new `type`, add it to the list in `src/content.config.ts`.
 
 ### Name, links and contact
 
-In [`src/data/site.ts`](src/data/site.ts), change the strings. To add a profile link, add a line to `links`:
+[`src/content/site.ts`](src/content/site.ts) is a small TypeScript file: only change the text between double quotes. To add a profile link, add a line to `links`:
 
 ```ts
     { label: "ORCID", href: "https://orcid.org/0000-0000-0000-0000" },
@@ -116,21 +122,23 @@ The email is written out as "megan dot dailey at unil dot ch" on purpose, so spa
 Files in `public/` are served as-is from the site root: `public/cv.pdf` becomes `https://megan-dailey.github.io/cv.pdf`.
 
 - **Photo:** replace `public/prof_pic.jpg`, keeping the same name. Square works best.
-- **CV:** add `public/cv.pdf`, then in [`src/data/site.ts`](src/data/site.ts) remove the leading `// ` from the `CV (PDF)` line (`//` comments a line out).
+- **CV:** add `public/cv.pdf`, then in [`src/content/site.ts`](src/content/site.ts) remove the leading `// ` from the `CV (PDF)` line (`//` comments a line out).
 
 ## Troubleshooting
 
-| Problem                                             | Fix                                                                                                                                                     |
-| --------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `command not found: npm` / `node`                   | Node isn't installed or the terminal was opened before installing it. Open a new terminal; with fnm, run `fnm use` in this folder.                      |
-| `npm run build` fails with ``Expected `,` or `}` `` | A missing comma, quote or bracket in the file and line it names, almost always `publications.ts` or `site.ts`.                                          |
-| `Cannot find module` / `astro: command not found`   | Run `npm install`.                                                                                                                                      |
-| Port 4321 already in use                            | Another `npm run dev` is still running in another terminal. Stop it, or use the other address it prints.                                                |
-| `git status` shows `package-lock.json` changed      | Usually harmless after `npm install` on another Node version. Discard it with `git checkout package-lock.json` unless you meant to update dependencies. |
+| Problem                                           | Fix                                                                                                                                                     |
+| ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `command not found: npm` / `node`                 | Node isn't installed or the terminal was opened before installing it. Open a new terminal; with fnm, run `fnm use` in this folder.                      |
+| `data does not match collection schema`           | A publication file has a missing or misspelled field, or a `type` not in the list. The message names the file and the field.                            |
+| ``Expected `,` or `}` ``                          | A missing comma, quote or bracket in `site.ts`, at the line it names.                                                                                   |
+| `Cannot find module` / `astro: command not found` | Run `npm install`.                                                                                                                                      |
+| Port 4321 already in use                          | Another `npm run dev` is still running in another terminal. Stop it, or use the other address it prints.                                                |
+| `git status` shows `package-lock.json` changed    | Usually harmless after `npm install` on another Node version. Discard it with `git checkout package-lock.json` unless you meant to update dependencies. |
 
 ## How it fits together
 
-- `src/pages/index.astro`: the page template (HTML with `{…}` placeholders filled from `src/data/`).
+- `src/pages/index.astro`: the page template (HTML with `{…}` placeholders filled from `src/content/`).
+- `src/content.config.ts`: the list of fields a publication file can have.
 - `src/styles/global.css`: colours, fonts and layout.
 - `package.json`: the project's dependencies and the `dev` / `build` commands. `package-lock.json` pins exact versions; commit it but don't edit it by hand.
 - `.github/workflows/deploy.yml`: on every push to `main`, GitHub runs `npm ci && npm run build` and publishes the `dist/` folder to the `gh-pages` branch, which GitHub Pages serves.
